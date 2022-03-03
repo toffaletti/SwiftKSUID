@@ -75,6 +75,11 @@ final class SwiftKSUIDTests: XCTestCase {
 			a.timestamp.timeIntervalSince1970, now.timeIntervalSince1970.rounded(.down))
 		XCTAssertEqual(a.payload.base64EncodedString(), "QeIBAAAAAABC4gEAAAAAAA==")
 	}
+
+	func testBasic() throws {
+		let k = KSUID()
+		XCTAssertEqual(k.description.count, 27)
+	}
 }
 
 final class FastBase62Tests: XCTestCase {
