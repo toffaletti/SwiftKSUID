@@ -31,6 +31,11 @@ final class SwiftKSUIDTests: XCTestCase {
 		XCTAssertEqual(a.payload.base64EncodedString(), "4ZM+N/J1cIdjrcd0WvXn8g==")
 	}
 
+	func testParseFuzz1() throws {
+		let src = Data(base64Encoded: "TExMTExMTExMTEz///8BTExMTExMTExMTEwK")!
+		XCTAssertThrowsError(try KSUID(String(data: src, encoding: .ascii)!))
+	}
+
 	func testParseInvalid() throws {
 		XCTAssertThrowsError(try KSUID("***************************"))
 		XCTAssertThrowsError(try KSUID("123"))

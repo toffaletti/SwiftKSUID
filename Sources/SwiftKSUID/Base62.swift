@@ -78,7 +78,10 @@ internal struct FastBase62 {
 		let dstBase: UInt64 = 4_294_967_296
 
 		let dest = Data(repeating: 0, count: 20)
-		let parts = try source.data(using: .ascii)!.map { c in
+		guard let data = source.data(using: .ascii) else {
+			throw Error.invalidCharacter  // TODO: better error
+		}
+		let parts = try data.map { c in
 			try base62Value(digit: UInt8(c))
 		}
 
