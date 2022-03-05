@@ -15,9 +15,9 @@ public struct KSUID {
 		case invalidLength
 	}
 
-	public init<T: RandomNumberGenerator>(randomSource: inout T, timestamp: Date) {
-		var r1 = UInt64.random(in: .min ... .max, using: &randomSource)
-		var r2 = UInt64.random(in: .min ... .max, using: &randomSource)
+	public init<T: RandomNumberGenerator>(using generator: inout T, timestamp: Date) {
+		var r1 = UInt64.random(in: .min ... .max, using: &generator)
+		var r2 = UInt64.random(in: .min ... .max, using: &generator)
 		let ts = UInt32(Int64(timestamp.timeIntervalSince1970) - KSUID.epochStamp)
 		withUnsafeMutableBytes(of: &storage) {
 			$0.bindMemory(to: UInt32.self)[0] = ts.bigEndian
@@ -27,8 +27,8 @@ public struct KSUID {
 	}
 
 	public init() {
-		var randomSource = SystemRandomNumberGenerator()
-		self.init(randomSource: &randomSource, timestamp: Date())
+		var generator = SystemRandomNumberGenerator()
+		self.init(using: &generator, timestamp: Date())
 	}
 
 	public init(_ base62String: String) throws {
