@@ -80,6 +80,16 @@ final class SwiftKSUIDTests: XCTestCase {
 		let k = KSUID()
 		XCTAssertEqual(k.description.count, 27)
 	}
+
+	func testBenchmarkCreate() {
+		var k: KSUID?
+		measure(metrics: [XCTMemoryMetric(), XCTCPUMetric()]) {
+			for _ in 0...100000 {
+				k = KSUID()
+			}
+		}
+		XCTAssertNotNil(k)
+	}
 }
 
 final class FastBase62Tests: XCTestCase {
