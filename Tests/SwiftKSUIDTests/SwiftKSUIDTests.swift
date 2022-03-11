@@ -67,10 +67,15 @@ final class SwiftKSUIDTests: XCTestCase {
 		XCTAssertEqual(a.description, "aWgEPTl1tmebfsQzFP4bxwgy80V")
 	}
 
+	func testTooLongData() throws {
+		let data = Data(repeating: 0xff, count: 21)
+		XCTAssertThrowsError(try KSUID(data: data))
+	}
+
 	func testRandom() throws {
-		var randomSource = NonRandomNumberGenerator(seed: 123_456)
+		var generator = NonRandomNumberGenerator(seed: 123_456)
 		let now = Date()
-		let a = KSUID(randomSource: &randomSource, timestamp: now)
+		let a = KSUID(using: &generator, timestamp: now)
 		XCTAssertEqual(
 			a.timestamp.timeIntervalSince1970, now.timeIntervalSince1970.rounded(.down))
 		XCTAssertEqual(a.payload.base64EncodedString(), "QeIBAAAAAABC4gEAAAAAAA==")
@@ -89,6 +94,42 @@ final class SwiftKSUIDTests: XCTestCase {
 			}
 		}
 		XCTAssertNotNil(k)
+	}
+
+	func testEquatable() throws {
+		let k = KSUID()
+		XCTAssertEqual(k, k)
+	}
+
+	func testComparabl() throws {
+		let min = try KSUID(data: Data(repeating: 0, count: 20))
+		let max = try KSUID(data: Data(repeating: 0xff, count: 20))
+		XCTAssertLessThan(min, max)
+		XCTAssertFalse(min < min)
+	}
+
+	func testHashable() throws {
+		let a = KSUID()
+		let b = KSUID()
+		XCTAssertNotEqual(a.hashValue, b.hashValue)
+		XCTAssertEqual(a.hashValue, a.hashValue)
+		XCTAssertEqual(b.hashValue, b.hashValue)
+	}
+
+	func testCodable() throws {
+		let k = KSUID()
+		let e = JSONEncoder()
+		let data = try e.encode(k)
+		let d = JSONDecoder()
+		let k2 = try d.decode(KSUID.self, from: data)
+		XCTAssertEqual(k, k2)
+
+		let dataCorrupted = Data(repeating: 0xff, count: 10)
+		// attempt to decode some garbage that isn't even JSON
+		XCTAssertThrowsError(try d.decode(KSUID.self, from: dataCorrupted))
+		// decode a JSON string that is not a valid KSUID string
+		XCTAssertThrowsError(
+			try d.decode(KSUID.self, from: #""astring""#.data(using: .ascii)!))
 	}
 }
 
