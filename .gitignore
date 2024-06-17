@@ -1,8 +1,15 @@
 .DS_Store
 /.build
+/build
 /Packages
 /*.xcodeproj
 xcuserdata/
 DerivedData/
 .swiftpm/
+.netrc
+.vs
+.docc-build/
+Package.resolved
+*.profraw
+.*.sw?
 .vscode/

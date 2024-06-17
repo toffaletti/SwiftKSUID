@@ -9,16 +9,17 @@ import Foundation
 /// 00-03 big endian UTC timestamp with custom epoch
 ///
 /// 04-19 random payload for uniqueness
-@frozen
-public struct KSUID {
+public struct KSUID: Sendable {
 	private static let epochStamp: Int64 = 1_400_000_000
 
-	internal var storage:
+	@usableFromInline
+	internal typealias ksuid_t =
 		(
 			UInt8, UInt8, UInt8, UInt8,
 			UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8,
 			UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8, UInt8
-		) = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+		)
+	internal var storage: ksuid_t = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 
 	/// Errors for KSUID
 	public enum Error: Swift.Error {
