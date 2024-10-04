@@ -1,4 +1,4 @@
-// swift-tools-version:5.10
+// swift-tools-version: 6.0
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -15,10 +15,9 @@ let package = Package(
 			targets: ["SwiftKSUID"])
 	],
 	dependencies: [
-		.package(url: "https://github.com/apple/swift-testing.git", revision: "0.9.0"),
 		.package(
 			url: "https://github.com/ordo-one/package-benchmark",
-			.upToNextMajor(from: "1.4.0")),
+			.upToNextMajor(from: "1.26.0"))
 	],
 	targets: [
 		.target(
@@ -27,7 +26,7 @@ let package = Package(
 		.testTarget(
 			name: "SwiftKSUIDTests",
 			dependencies: [
-				"SwiftKSUID", .product(name: "Testing", package: "swift-testing"),
+				"SwiftKSUID"
 			]),
 	]
 )

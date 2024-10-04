@@ -35,7 +35,7 @@ struct SwiftKSUIDTests {
 	@Test func parseFuzz1() throws {
 		let src = Data(base64Encoded: "TExMTExMTExMTEz///8BTExMTExMTExMTEwK")!
 		#expect(throws: (any Error).self) {
-			try KSUID(String(data: src, encoding: .ascii)!)
+			try KSUID(data: src)
 		}
 	}
 
