@@ -1,4 +1,8 @@
-import Foundation
+#if canImport(FoundationEssentials)
+	import FoundationEssentials
+#else
+	import Foundation
+#endif
 
 /// KSUID is a 20-byte K-Sortable Unique Identifier
 ///

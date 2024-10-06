@@ -1,7 +1,12 @@
-import Foundation
 import Testing
 
 @testable import SwiftKSUID
+
+#if canImport(FoundationEssentials)
+	import FoundationEssentials
+#else
+	import Foundation
+#endif
 
 struct NonRandomNumberGenerator {
 	var state: UInt64
