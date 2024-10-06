@@ -3,6 +3,9 @@
 
 name: Swift
 
+env:
+  BENCHMARK_DISABLE_JEMALLOC: 1
+
 on:
   push:
     branches: [ "main" ]
