@@ -5,7 +5,11 @@
 //  Created by Jason Toffaletti on 3/1/22.
 //
 
-import Foundation
+#if canImport(FoundationEssentials)
+	import FoundationEssentials
+#else
+	import Foundation
+#endif
 
 internal struct FastBase62 {
 	private static let base62Characters =
