@@ -1,4 +1,4 @@
-// swift-tools-version: 6.0
+// swift-tools-version: 6.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -6,8 +6,8 @@ import PackageDescription
 let package = Package(
 	name: "SwiftKSUID",
 	platforms: [
-		.iOS(.v13), .macOS(.v13), .macCatalyst(.v13), .tvOS(.v13), .visionOS(.v1),
-		.watchOS(.v6),
+		.iOS(.v26), .macOS(.v26), .macCatalyst(.v26), .tvOS(.v26), .visionOS(.v26),
+		.watchOS(.v26),
 	],
 	products: [
 		.library(
@@ -17,7 +17,7 @@ let package = Package(
 	dependencies: [
 		.package(
 			url: "https://github.com/ordo-one/package-benchmark",
-			.upToNextMajor(from: "1.26.0"))
+			.upToNextMajor(from: "1.29.0"))
 	],
 	targets: [
 		.target(

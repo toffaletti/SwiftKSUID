@@ -16,10 +16,10 @@ jobs:
   build-macos:
     runs-on: macos-latest
     steps:
-    - uses: maxim-lobanov/setup-xcode@v1
-      with:
-        xcode-version: latest-stable
     - uses: actions/checkout@v4
+    - uses: vapor/swiftly-action@v0.2
+      with:
+        toolchain: 6.2
     - name: Build
       run: swift build -v
     - name: Run tests
@@ -28,6 +28,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
+    - uses: vapor/swiftly-action@v0.2
+      with:
+        toolchain: 6.2
     - name: Build
       run: swift build -v
     - name: Run tests
